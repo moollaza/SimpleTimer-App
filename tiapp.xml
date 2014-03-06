@@ -1,0 +1,23 @@
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+	
+<id>SimpleTimer</id>
+<name>Timer</name>
+<version>1.0</version>
+<publisher>Zaahir</publisher>
+<url>http://zaahir.ca</url>
+<icon>default_app_logo.png</icon>
+<copyright>2014 by Zaahir Moolla</copyright>
+	<window>
+		<id>initial</id>
+		<title>My Great App</title>
+		<url>app://index.html</url>
+		<width>700</width>
+		<height>500</height>
+		<fullscreen>false</fullscreen>
+		<resizable>true</resizable>
+		<maximizable>true</maximizable>
+		<minimizable>true</minimizable>
+		<closeable>true</closeable>
+		<chrome>false</chrome>
+	</window>
+</ti:app>
