@@ -11,21 +11,37 @@
 	<!-- JS -->
 	<script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/setup.js"></script>
+	<script type="text/javascript" src="js/fittext.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-	<div id="windowTitleBar" class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<button id="windowClose" class="windowMaxMinButtons btn btn-sm pull-right">X</button>
-				<button id="windowMinimize" class="windowMaxMinButtons btn btn-sm pull-right">_</button>
-			</div>
-		</div>
-	</div>
-
 	<div class="container">
-		<div class="page-header">
-			<h1>SimpleTimer</h1>
+		<div id="timer">
+			<div class="time_container">
+				<input id="days" value="00" type="number" min="0" max="99">
+				<label>Days</label>
+			</div>
+			
+			<div class="time_seperator">:</div>
+
+			<div class="time_container">
+				<input id="hours" value="00" type="number" min="0">
+				<label>Hours</label>
+			</div>
+			
+			<div class="time_seperator">:</div>
+
+			<div class="time_container">
+				<input id="minutes" value="00" type="number" min="0">
+				<label>Minutes</label>
+			</div>
+			
+			<div class="time_seperator">:</div>
+
+			<div class="time_container">
+				<input id="seconds" value="00" type="number" min="0">
+				<label>Seconds</label>
+			</div>
 		</div>
 	</div>
 </body>

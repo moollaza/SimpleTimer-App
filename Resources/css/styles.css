@@ -1,17 +1,49 @@
-html,
-body { 
-	height: 100%;
-	max-height: 100%;
+#timer {
+	color: #999;
+	font-family: "Menlo", "Arial", "sans-serif";
+	text-align: center;
+	line-height: 30px;
+	padding: 20px;
 	width: 100%;
-	margin: 0;
-	padding: 0;
-	border: 0.5px solid #999;
-	box-shadow: 0px -2px 2px #333;
-	 -webkit-box-shadow: 10px 10px 5px #888;
-	/*background: transparent*/
+	margin: 0 auto;
 }
- 
-body {
-    overflow: hidden;
-    /*background: transparent;*/
+
+#timer .time_container,
+#timer .time_seperator {
+	text-align: center;
+	display: inline-block;
+	vertical-align: top;
+}
+
+#timer .time_container {
+	width: 20%;
+}
+
+.time_container input,
+.time_container label {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.time_container input {
+	border: 1px solid #999;
+	border-radius: 5px;
+	min-width: 30px;
+	font-size: 13em;
+}
+
+.time_container input:focus {
+	outline: none;
+	color: #777;
+}
+
+.time_container label {
+	clear: both;
+	font-size: 1em;
+	min-width: 10px;
+}
+
+.time_seperator {
+	line-height: 4.5em;
 }
