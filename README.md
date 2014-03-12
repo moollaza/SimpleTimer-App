@@ -10,4 +10,4 @@ This should work on Windows, Mac and Linux thanks to the [TideSDK](http://www.ti
 
 <hr>
 
-Made with <3 by [Zaahir Moolla](http://zaahir.ca).
+Made by [Zaahir Moolla](http://zaahir.ca).
