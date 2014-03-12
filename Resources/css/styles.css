@@ -1,27 +1,33 @@
+.container {
+	width: 40%;
+	text-align: center;
+}
+
+#controls {
+	margin-bottom: 20px;
+}
+
 #timer {
+	display: inline-block;
 	color: #999;
 	font-family: "Menlo", "Arial", "sans-serif";
-	text-align: center;
-	padding: 15px;
-	width: 100%;
-	margin: 50px auto 20px;
+	margin: 30px auto;
 }
 
 #timer .time_container,
 #timer .time_seperator {
 	text-align: center;
-	display: inline-block;
+	display: block;
 	vertical-align: top;
+    float: left;
 }
 
 #timer .time_container {
-	width: 15%;
-	min-width: 100px;
+	width: 30%;
 }
 
 .time_container input,
 .time_container label {
-	display: block;
 	width: 100%;
 	text-align: center;
 }
@@ -47,9 +53,5 @@
 .time_seperator {
 	line-height: 7em;
 	font-weight: bold;
-}
-
-.wrap {
-	width: 250px;
-	margin: 0 auto;
+    width: 5%;
 }

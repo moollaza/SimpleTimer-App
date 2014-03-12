@@ -12,30 +12,34 @@
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
-	<div id="timer">
-		<div class="time_container">
-			<input id="hours" value="0" type="number" min="0">
-			<label>Hours</label>
-		</div>
-
-		<div class="time_seperator">:</div>
-
-		<div class="time_container">
-			<input id="minutes" value="0" type="number" min="0">
-			<label>Minutes</label>
-		</div>
+	<div class="container">
 		
-		<div class="time_seperator">:</div>
+		<div id="timer">
+		
+			<div id="controls">
+				<button id="start" type="button" class="btn btn-success disabled pull-left">Start</button>
+				<button id="reset" type="button" class="btn btn-default pull-right">Reset</button>
+				<div class="clearfix"></div>
+			</div>
 
-		<div class="time_container">
-			<input id="seconds" value="0" type="number" min="0">
-			<label>Seconds</label>
+			<div class="time_container">
+				<input id="hours" value="0" type="number" min="0">
+				<label>Hours</label>
+			</div>
+			<div class="time_seperator">:</div>
+			<div class="time_container">
+				<input id="minutes" value="0" type="number" min="0">
+				<label>Minutes</label>
+			</div>
+			<div class="time_seperator">:</div>
+			<div class="time_container">
+				<input id="seconds" value="0" type="number" min="0">
+				<label>Seconds</label>
+			</div>
 		</div>
-	</div>
 
-	<div class="wrap">
 		<canvas id="progress" height="250px" width="250px"></canvas>
-	</div>
 
+	</div>
 </body>
 </html>

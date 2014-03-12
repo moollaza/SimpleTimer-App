@@ -1,19 +1,40 @@
 $(document).ready(function() {
+	'use strict'
 	
+	// jQuery objs
 	var $timer  = $('#timer'),
 		$inputs = $timer.find('input'),
 		hoursInput = function () { return parseFloat( $inputs[0].value ) },
 		minsInput  = function () { return parseFloat( $inputs[1].value ) },
-		secsInput  = function () { return parseFloat( $inputs[2].value ) };
+		secsInput  = function () { return parseFloat( $inputs[2].value ) },
+		$start = $("#start"),
+		$reset = $("#reset")
 	
-	// constants
+	// Constants
 	var	START = 0,
 		END = 0,
 		LENGTH = 0,
 		TS = null,
 		TIMEOUT = null,
 		SELECTED = null,
+		PAUSED = 1,
 		UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS; // For countdown.js
+
+	// CANVAS 
+	var canvas = document.getElementById('progress'),
+		context = canvas.getContext('2d'),
+		X = canvas.width / 2,
+		Y = canvas.height / 2,
+		RADIUS = 100,
+		CIRC = Math.PI * 2,
+		QUART = Math.PI / 2;
+
+	// Reset inputs on page refresh
+	$inputs.val(0);
+
+	// 
+	// HANDLERS
+	// 
 
 	$inputs.on("keyup change",function(event) {
 
@@ -22,14 +43,8 @@ $(document).ready(function() {
 
 		var charCode = event.which || event.keyCode;
 
-		// Start counting!
 		// Make sure "Enter" key or number key pressed
 		if (charCode == 13 || !(charCode < 48 || charCode > 57)) {
-
-			// Un-focus inputs when "Enter" pressed
-			if (charCode == 13) {
-				$inputs.blur();
-			}
 
 			START = new Date();
 			END = new Date();
@@ -41,34 +56,21 @@ $(document).ready(function() {
 
 			LENGTH = END - START;
 
-			// Create countdown obj
-			window.clearInterval(TS);
-			window.clearInterval(TIMEOUT);
-			TS = countdown(
-				function (ts) {
+			// Prevent counting up if "Enter"
+			// pressed before time is entered
+			if (LENGTH <= 0) { 
+				$start.addClass('disabled');
+				return false;
+			} else {
+				$start.removeClass('disabled');
+				$reset.removeClass('disabled');
+			}
 
-					// Prevent counting up if "Enter"
-					// pressed before time is entered
-					if (!(END > START)) { return false };
-
-					// Update input values for non-focused inputs
-					$inputs.not(':focus').each(function() {
-						$(this).val(ts[this.id]);
-					});
-
-					// Timer finished
-					if (ts.value < 0) {
-						window.clearInterval(TS);
-						window.clearInterval(TIMEOUT);
-						return;
-					}
-				},
-				END,
-				UNITS
-			);
-
-			// Update progress circle
-			TIMEOUT = setInterval(updateUI, 1);
+			// Un-focus inputs when "Enter" pressed
+			if (charCode == 13) {
+				$inputs.blur();
+				$start.click();
+			}
 		}
 
 	}).click(function() {
@@ -76,6 +78,67 @@ $(document).ready(function() {
 		SELECTED = this;
 		this.select();
 	});
+
+
+	// Create countdown and animate
+	// progress circle
+	$start.click(function(event) {
+		
+		PAUSED = !PAUSED;
+
+		if (PAUSED){
+			clearTimers();
+			$start.text('Start').toggleClass('btn-success btn-danger');
+		} else {
+			$start.text('Stop').toggleClass('btn-success btn-danger');
+		};
+
+
+		if (PAUSED) { return false };
+
+		// Create countdown obj
+		TS = countdown(
+			function (ts) {
+
+				// Update input values for non-focused inputs
+				$inputs.not(':focus').each(function() {
+					$(this).val(ts[this.id]);
+				});
+
+				// Timer finished
+				if (ts.value < 0) {
+					clearTimers();
+					$start.text('Start').removeClass('btn-danger').addClass('btn-success disabled');
+					return;
+				}
+			},
+			END,
+			UNITS
+		);
+
+		// Update progress circle
+		TIMEOUT = setInterval(updateUI, 1);
+	});
+
+	$reset.click(function(event) {
+		clearTimers();
+		$inputs.val(0);
+		$start.text('Start').removeClass('btn-danger').addClass('btn-success disabled');
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		PAUSED = 1;
+	});
+
+	//
+	// HELPERS
+	// 
+
+	// requestAnimFrame Shim
+	window.requestAnimFrame = (function(callback) {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
 
 	// Calculate percent completion
 	// and draw to canvas accordingly
@@ -86,22 +149,11 @@ $(document).ready(function() {
 		});
 	}
 
-	// requestAnimFrame Shim
-	window.requestAnimFrame = (function(callback) {
-		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-		function(callback) {
-			window.setTimeout(callback, 1000 / 60);
-		};
-	})();
-
-	// CANVAS 
-	var canvas = document.getElementById('progress'),
-		context = canvas.getContext('2d'),
-		X = canvas.width / 2,
-		Y = canvas.height / 2,
-		RADIUS = 100,
-		CIRC = Math.PI * 2,
-		QUART = Math.PI / 2;
+	// Clear all interval timers
+	function clearTimers(){
+		window.clearInterval(TS);
+		window.clearInterval(TIMEOUT);
+	}
 
 	// Draw circle to canvas
 	function animate(percent) {
