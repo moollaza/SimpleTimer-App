@@ -12,6 +12,7 @@ $(document).ready(function() {
 		LENGTH = 0,
 		TS = null,
 		TIMEOUT = null,
+		SELECTED = null,
 		UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS; // For countdown.js
 
 	$inputs.on("keyup change",function(event) {
@@ -71,6 +72,8 @@ $(document).ready(function() {
 		}
 
 	}).click(function() {
+		if (SELECTED == this) return false;
+		SELECTED = this;
 		this.select();
 	});
 
