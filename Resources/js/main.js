@@ -1,31 +1,18 @@
 $(document).ready(function() {
 	
 	var $timer  = $('#timer'),
-	$inputs = $timer.find('input'),
-	// $dial = $("#progress_dial");
+		$inputs = $timer.find('input'),
+		hours = $inputs[0].value,
+		mins = $inputs[1].value ,
+		secs = $inputs[2].value;
 	
-	// $dial.knob({ 
-	// 	'readOnly': true,
-	// 	'step' : 1,
-	// 	// 'font' : 'monospace'
-	// 	'displayInput' : false
-	// });
-
-	// var
-	timer = {
-		// days  : function () { return parseFloat( $inputs[0].value ) },
-		hours : function () { return parseFloat( $inputs[0].value ) },
-		mins  : function () { return parseFloat( $inputs[1].value ) },
-		secs  : function () { return parseFloat( $inputs[2].value ) }
-		// msecs : function () { return parseFloat( $inputs[4].val() ) }
-	};
-	
+	// constants
 	var	START = 0,
-	END = 0,
-	LENGTH = 0,
-	TS = null,
-	TIMEOUT = null,
-	UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS;
+		END = 0,
+		LENGTH = 0,
+		TS = null,
+		TIMEOUT = null,
+		UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS; // For countdown.js
 
 	$inputs.on("keydown change",function(event) {
 		
@@ -35,8 +22,10 @@ $(document).ready(function() {
 		var charCode = event.which || event.keyCode;
 
 		// Start counting!
+		// Make sure "Enter" key or number key pressed
 		if (charCode == 13 || !(charCode < 48 || charCode > 57)) {
 
+			// Un-focus inputs when "Enter" pressed
 			if (charCode == 13) {
 				$inputs.blur();
 			}
@@ -44,11 +33,10 @@ $(document).ready(function() {
 			START = new Date();
 			END = new Date();
 			
-			// Tally timer durations
-			END.setSeconds(END.getSeconds() + timer.secs());
-			END.setMinutes(END.getMinutes() + timer.mins());
-			END.setHours(END.getHours() + timer.hours());
-			// END.setDate(END.getDate() + timer.days());
+			// Add up timer durations
+			END.setSeconds(END.getSeconds() + secs);
+			END.setMinutes(END.getMinutes() + mins);
+			END.setHours(END.getHours() + hours);
 			
 			LENGTH = END - START;
 			
@@ -58,24 +46,17 @@ $(document).ready(function() {
 			TS = countdown(
 				function (ts) {
 
-					// Don't allow counting up
-					// when no time given
+					// Prevent counting up if "Enter"
+					// pressed before time is entered
 					if (!(END > START)) { return false };
 					
-					// Update input values
-					// ignore focused inputs
+					// Update input values for non-focused inputs
 					$inputs.not(':focus').each(function() {
 						$(this).val(ts[this.id]);
 					});
 
-					// debug output
-					// $timer.find('#timespan')
-					// 	.show()
-					// 	.text(JSON.stringify(ts, null, '  '));
-
 					// Timer finished
 					if (ts.value < 0) {
-						// $dial.val(0).trigger('change');
 						window.clearInterval(TS);
 						window.clearInterval(TIMEOUT);
 						return;
@@ -85,14 +66,17 @@ $(document).ready(function() {
 				UNITS
 			);
 
-			// Update progress dial
+			// Update progress circle
 			TIMEOUT = setInterval(updateUI, 1);
 		}
-		
+
+	// Auto select text to overwrite on input		
 	}).focus(function() {
 		$(this).select();
 	});
 
+	// Calculate percent completion
+	// and draw to canvas accordingly
 	function updateUI() {
 		var percent = ($.now() - START) / LENGTH;
 		requestAnimFrame(function() {
@@ -108,6 +92,7 @@ $(document).ready(function() {
 		};
 	})();
 
+	// CANVAS 
 	var canvas = document.getElementById('progress'),
 		context = canvas.getContext('2d'),
 		X = canvas.width / 2,
@@ -116,9 +101,10 @@ $(document).ready(function() {
 		CIRC = Math.PI * 2,
 		QUART = Math.PI / 2;
 
+	// Draw circle to canvas
 	function animate(percent) {
 		var start = -(QUART),
-		end = (CIRC * percent) - QUART;
+			end = (CIRC * percent) - QUART;
 
 		context.clearRect(0, 0, canvas.width, canvas.height);
 
