@@ -2,10 +2,9 @@
 	color: #999;
 	font-family: "Menlo", "Arial", "sans-serif";
 	text-align: center;
-	line-height: 30px;
 	padding: 15px;
 	width: 100%;
-	margin: 50px auto;
+	margin: 50px auto 20px;
 }
 
 #timer .time_container,
@@ -16,7 +15,8 @@
 }
 
 #timer .time_container {
-	width: 10%;
+	width: 15%;
+	min-width: 100px;
 }
 
 .time_container input,
@@ -49,7 +49,7 @@
 	font-weight: bold;
 }
 
-#progress {
-	width: 200px;
+.wrap {
+	width: 250px;
 	margin: 0 auto;
 }

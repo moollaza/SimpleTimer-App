@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>SimpleTimer</title>
+	<!-- <title>SimpleTimer</title> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- CSS -->
@@ -13,7 +13,6 @@
 	<script type="text/javascript" src="js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/countdown.min.js"></script>
-	<script type="text/javascript" src="js/jquery.knob.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body>
@@ -43,14 +42,15 @@
 			<input id="seconds" value="0" type="number" min="0">
 			<label>Seconds</label>
 		</div>
-		<!-- <div class="clearfix">
+	
+	<!-- <div class="clearfix">
 			<pre id="timespan"></pre>
 		</div> -->
 	</div>
 
-	<p id="progress">
-		<input id="progress_dial" class="dial" value="0">
-	</p>
+	<div class="wrap">
+		<canvas id="progress" height="250px" width="250px"></canvas>
+	</div>
 
 </body>
 </html>
