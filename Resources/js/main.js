@@ -2,9 +2,9 @@ $(document).ready(function() {
 	
 	var $timer  = $('#timer'),
 		$inputs = $timer.find('input'),
-		hours = $inputs[0].value,
-		mins = $inputs[1].value ,
-		secs = $inputs[2].value;
+		hoursInput = function () { return parseFloat( $inputs[0].value ) },
+		minsInput  = function () { return parseFloat( $inputs[1].value ) },
+		secsInput  = function () { return parseFloat( $inputs[2].value ) };
 	
 	// constants
 	var	START = 0,
@@ -14,8 +14,8 @@ $(document).ready(function() {
 		TIMEOUT = null,
 		UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS; // For countdown.js
 
-	$inputs.on("keydown change",function(event) {
-		
+	$inputs.on("keyup change",function(event) {
+
 		// Only allow digits in input boxes
 		$(event.target).val( this.value.replace(/\D+/g, '') );
 
@@ -32,14 +32,14 @@ $(document).ready(function() {
 
 			START = new Date();
 			END = new Date();
-			
+
 			// Add up timer durations
-			END.setSeconds(END.getSeconds() + secs);
-			END.setMinutes(END.getMinutes() + mins);
-			END.setHours(END.getHours() + hours);
-			
+			END.setSeconds( END.getSeconds() + secsInput() );
+			END.setMinutes( END.getMinutes() + minsInput() );
+			END.setHours( END.getHours() + hoursInput() );
+
 			LENGTH = END - START;
-			
+
 			// Create countdown obj
 			window.clearInterval(TS);
 			window.clearInterval(TIMEOUT);
@@ -49,7 +49,7 @@ $(document).ready(function() {
 					// Prevent counting up if "Enter"
 					// pressed before time is entered
 					if (!(END > START)) { return false };
-					
+
 					// Update input values for non-focused inputs
 					$inputs.not(':focus').each(function() {
 						$(this).val(ts[this.id]);
@@ -70,9 +70,8 @@ $(document).ready(function() {
 			TIMEOUT = setInterval(updateUI, 1);
 		}
 
-	// Auto select text to overwrite on input		
-	}).focus(function() {
-		$(this).select();
+	}).click(function() {
+		this.select();
 	});
 
 	// Calculate percent completion
@@ -114,7 +113,7 @@ $(document).ready(function() {
 		context.strokeStyle = '#777';
 		context.arc(X, Y, RADIUS+8, start, CIRC, false);
 		context.stroke();
-		
+
 		// progress circle
 		context.beginPath();
 		context.lineWidth = 10;
