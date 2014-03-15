@@ -61,10 +61,8 @@ $(document).ready(function() {
 		// Un-focus inputs when "Enter" pressed
 		// restart timer with new values
 		if (event.key === "Enter") {
-			console.log("PRESSED ENTER");
 			$inputs.blur();
 			STOPPPED = 0;
-			console.log("START!");
 
 			// create new timer
 			setUI();
@@ -93,7 +91,6 @@ $(document).ready(function() {
 		$(event.target).val( value );
 
 	}).click(function() {
-		console.log("CLICK!");
 		// ignore if already selected,
 		// to allow cursor placement
 		if (SELECTED === this) { return false; }
@@ -101,9 +98,6 @@ $(document).ready(function() {
 		this.select();
 
 	}).change(function(event) {
-
-		console.log("Inputs changed!");
-
 		// create new timer
 		setUI();
 	});
@@ -137,8 +131,6 @@ $(document).ready(function() {
 	
 	function setUI (continue_timer) {
 
-		console.log("setUI()");
-		console.log("STOPPPED: ", STOPPPED);
 
 		if (STOPPPED) { 
 			clearTimers();
@@ -200,7 +192,6 @@ $(document).ready(function() {
 	// and draw to canvas accordingly
 	function updateUI() {
 		var percent = ($.now() - START) / LENGTH;
-		console.log("PERCENT IS: %s%", Math.round(percent));
 		animate(percent);
 	}
 
