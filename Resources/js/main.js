@@ -17,7 +17,7 @@ $(document).ready(function() {
 		TS = null,
 		TIMEOUT = null,
 		SELECTED = null,
-		STOPPPED = 1,
+		IS_STOPPED = true,
 		UNITS = countdown.HOURS|countdown.MINUTES|countdown.SECONDS; // For countdown.js
 
 	// CANVAS 
@@ -49,24 +49,27 @@ $(document).ready(function() {
 		// Set changed value
 		$(event.target).val( value );
 
-		// enable Start button when timer
+		// enable 'Start' button when timer
 		// has positive value
-		$start.addClass('disabled');
-		$inputs.each(function(index, el) {
-			if (el.value > 0) {
-				$start.removeClass('disabled');
-			}
-		});
+		if (IS_STOPPED){
+			$start.addClass('disabled');
+			$inputs.each(function(index, el) {
+				if (el.value > 0) {
+					$start.removeClass('disabled');
+				}
+			});
+		}
 		
 		// Un-focus inputs when "Enter" pressed
 		// restart timer with new values
 		if (event.key === "Enter") {
 			$inputs.blur();
-			STOPPPED = 0;
+			IS_STOPPED = false;
 
 			// create new timer
 			setUI();
 		}
+
 
 	}).keydown(function(event) {
 
@@ -107,17 +110,29 @@ $(document).ready(function() {
 	// progress circle
 	$start.click(function(event) {
 		
-		var continue_timer = false;
+		// 'Start' button pressed 
+		if (IS_STOPPED) {
 
-		$inputs.each(function(index, el) {
-			if (el.value > 0) {
-				continue_timer = true;
-			}
-		});
+			IS_STOPPED = false;
 
-		STOPPPED = !STOPPPED;
-		// create new timer
-		setUI(continue_timer);
+			var continue_timer = false;
+			$inputs.each(function(index, el) {
+				if (el.value > 0) {
+					continue_timer = true;
+				}
+			});
+
+			// create new timer
+			setUI(continue_timer);
+		}
+
+		// 'Stop' button pressed
+		else {
+			IS_STOPPED = true;
+			$start.text('Start').removeClass('btn-danger').addClass('btn-success');
+			clearTimers();
+			return false;
+		}
 	});
 
 
@@ -125,34 +140,32 @@ $(document).ready(function() {
 		resetUI();
 	});
 
+	
 	//
 	// HELPERS
 	//
 	
 	function setUI (continue_timer) {
-
-
-		if (STOPPPED) { 
-			clearTimers();
-			$start.text('Start').removeClass('btn-danger').addClass('btn-success');
-			return false;
-		} 
 		
 		$start.text('Stop').removeClass('btn-success').addClass('btn-danger');
 		
-		if (!continue_timer) {
+		// If not continuing from stopped state
+		if (!(START && continue_timer)) {
 			clearTimers();
 			START = new Date();
+			console.log("STARTING FRESH!");
 		}
 
 		END = new Date();
 
-		// Add up timer durations
+		// Add up timer input durations
 		END.setSeconds( END.getSeconds() + secsInput() );
 		END.setMinutes( END.getMinutes() + minsInput() );
 		END.setHours( END.getHours() + hoursInput() );
 
 		LENGTH = END - START;
+
+		console.log("LENGTH IS: ", LENGTH);
 
 		// Prevent counting up if "Enter"
 		// pressed before time is entered
@@ -213,7 +226,7 @@ $(document).ready(function() {
 		// reset state
 		START = null;
 		END = null;
-		STOPPPED = 1;
+		IS_STOPPED = true;
 		
 	}
 
