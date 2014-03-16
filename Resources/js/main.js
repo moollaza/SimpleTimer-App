@@ -153,7 +153,6 @@ $(document).ready(function() {
 		if (!(START && continue_timer)) {
 			clearTimers();
 			START = new Date();
-			console.log("STARTING FRESH!");
 		}
 
 		END = new Date();
@@ -165,7 +164,6 @@ $(document).ready(function() {
 
 		LENGTH = END - START;
 
-		console.log("LENGTH IS: ", LENGTH);
 
 		// Prevent counting up if "Enter"
 		// pressed before time is entered
@@ -227,7 +225,6 @@ $(document).ready(function() {
 		START = null;
 		END = null;
 		IS_STOPPED = true;
-		
 	}
 
 	// Clear all interval timers
