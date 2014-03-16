@@ -1,3 +1,31 @@
+@font-face {
+	font-family: 'sofia_pro_lightregular';
+	src: url('../fonts/SofiaProLight-webfont.eot');
+	src: url('../fonts/SofiaProLight-webfont.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/SofiaProLight-webfont.woff') format('woff'),
+	url('../fonts/SofiaProLight-webfont.ttf') format('truetype'),
+	url('../fonts/SofiaProLight-webfont.svg#sofia_pro_lightregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+@font-face {
+	font-family: 'equiplight';
+	src: url('../fonts/EquipLig-webfont.eot');
+	src: url('../fonts/EquipLig-webfont.eot?#iefix') format('embedded-opentype'),
+	url('../fonts/EquipLig-webfont.woff') format('woff'),
+	url('../fonts/EquipLig-webfont.ttf') format('truetype'),
+	url('../fonts/EquipLig-webfont.svg#equiplight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+body {
+	font-family: 'equiplight';
+}
+
 .container {
 	width: 60%;
 	text-align: center;
@@ -11,7 +39,6 @@
 #timer {
 	display: inline-block;
 	color: #999;
-	font-family: "Menlo", "Arial", "sans-serif";
 	margin: 30px auto;
 }
 
@@ -20,7 +47,7 @@
 	text-align: center;
 	display: block;
 	vertical-align: top;
-    float: left;
+	float: left;
 }
 
 #timer .time_container {
@@ -47,12 +74,12 @@
 
 .time_container label {
 	clear: both;
-	font-size: 1em;
+	font-size: 17px;
 	min-width: 10px;
 }
 
 .time_seperator {
 	line-height: 7em;
 	font-weight: bold;
-    width: 5%;
+	width: 5%;
 }
