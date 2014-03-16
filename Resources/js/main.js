@@ -47,7 +47,7 @@ $(document).ready(function() {
 		}
 
 		// Set changed value
-		$(event.target).val( value );
+		$(this).val( value );
 
 		// enable 'Start' button when timer
 		// has positive value
@@ -62,7 +62,7 @@ $(document).ready(function() {
 		
 		// Un-focus inputs when "Enter" pressed
 		// restart timer with new values
-		if (event.key === "Enter") {
+		if (event.key === "Enter" || event.key === "Tab") {
 			$inputs.blur();
 			IS_STOPPED = false;
 
@@ -100,7 +100,7 @@ $(document).ready(function() {
 		SELECTED = this;
 		this.select();
 
-	}).change(function(event) {
+	}).change(function() {
 		// create new timer
 		setUI();
 	});
@@ -108,7 +108,7 @@ $(document).ready(function() {
 
 	// Create countdown and animate
 	// progress circle
-	$start.click(function(event) {
+	$start.click(function() {
 		
 		// 'Start' button pressed 
 		if (IS_STOPPED) {
@@ -136,7 +136,7 @@ $(document).ready(function() {
 	});
 
 
-	$reset.click(function(event) {
+	$reset.click(function() {
 		resetUI();
 	});
 
